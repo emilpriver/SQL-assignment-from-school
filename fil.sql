@@ -1,6 +1,3 @@
--- Välj databas:
-use DEV;
-
 -- Uppgift 1 Skapa tabellerna:
 
 CREATE TABLE Kund (
@@ -297,10 +294,85 @@ INNER JOIN  Ras R ON D.rasID = R.rasID
 INNER JOIN  Art A ON R.artID = A.artID;
 
 
--- Hämta alla djur samt ras o art med inner join
+-- Hämta alla djur samt ras o art med from where
 SELECT D.djurID as DjurID, D.namn as Namn, R.namn as Ras, A.namn as Art
 FROM Djur D, Ras R, Art A
 WHERE (D.rasID = R.rasID AND R.artID = A.artID)
 
--- För DEV
-use Northwind
+-- Hämta Carls art via inner join
+SELECT	D.namn, A.namn as Art
+from Djur D
+inner join ras R on R.rasID = D.rasID
+inner join Art A on A.artID = R.artID
+where D.djurID = 77
+
+-- Hämta Carls art via from where
+SELECT	D.namn, A.namn AS Art
+FROM Djur D
+INNER JOIN ras R ON R.rasID = D.rasID
+INNER JOIN Art A ON A.artID = R.artID
+WHERE D.djurID = 77
+
+
+-- Hämta carls info via where/from
+SELECT  D.namn as Namn, A.namn as Art
+FROM Djur D, Ras R, Art A
+WHERE (D.djurID = 77 and D.rasID = R.rasID AND R.artID = A.artID)
+
+-- Räkna antal djur per person med inner join
+SELECT K.fnamn as Fornamn, count(distinct D.djurID) as antalDjur 
+from Kund K 
+inner join Djur D on D.kundID = K.kundID
+GROUP BY K.fnamn
+
+-- Räkna antal djur med where/from
+SELECT K.fnamn as Fornamn, count(distinct D.djurID) as TotaltAntalDjur
+FROM Djur D, Kund K
+WHERE (D.kundID = K.kundID)
+GROUP BY K.fnamn
+
+-- Räkna antal arter Louise har med inner join
+SELECT K.fnamn as Fornamn, count(distinct A.artID) as antalArter 
+from Kund K 
+inner join Djur D on D.kundID = K.kundID
+INNER JOIN Ras R on R.rasID = D.rasID
+INNER JOIN Art A on A.artID = R.artID
+WHERE K.kundID = 28
+GROUP BY K.fnamn
+
+-- Räkna antal arter Louse har med where/from
+SELECT K.fnamn as Fornamn, count(distinct A.artID) as TotaltAntalArter
+FROM Djur D, Kund K, Art A, Ras R
+WHERE (K.kundID = 28 AND D.kundID = K.kundID and D.rasID = R.rasID and A.artID = R.artID)
+GROUP BY K.fnamn
+
+-- UPPGIFT 4
+
+-- Skapa constrains 
+ALTER TABLE Djur
+ADD CONSTRAINT rasIDUnique FOREIGN KEY (rasID) REFERENCES Ras (rasID)
+
+ALTER TABLE Ras 
+ADD CONSTRAINT artIDUnique FOREIGN KEY (artID) REFERENCES Art (artID)
+
+-- UPPGIFT 5
+
+-- Skapa en ny ras
+INSERT INTO Ras (namn, rasID, artID) VALUES ('engelsk sheck',1200,17);
+
+--  Skapa en art med "hund" namnet
+INSERT INTO Art (namn, artID) VALUES ('Hund', 6)
+
+-- Skapa en kund o djur
+INSERT INTO Kund (fnamn, enamn, persnr, gatuadr, postnr, ort) VALUES ('Emil','Trandberg','570303-1253','Linfä2ltsvägen 103',30310,'Klagshamns');
+select kundID FROM kund WHERE persnr = '570303-1253'
+INSERT INTO Djur (namn, rasID, kundID) VALUES ('Lowa', 42,32);
+
+-- Kontrollera med allt från kund samt djurets namn, rasens namn o artens namn för de nya djuret med INER JOIN
+SELECT k.kundID, k.enamn, K.fnamn, k.gatuadr, K.ort, k.persnr, k.postnr, D.namn as Djur, R.namn as Ras, A.namn AS Art
+FROM Kund K
+INNER JOIN Djur D ON D.djurID = 152
+INNER JOIN ras R ON R.rasID = D.rasID
+INNER JOIN Art A ON A.artID = R.artID
+WHERE K.kundID = 32
+
