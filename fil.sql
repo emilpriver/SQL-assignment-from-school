@@ -307,6 +307,12 @@ inner join ras R on R.rasID = D.rasID
 inner join Art A on A.artID = R.artID
 where D.djurID = 77
 
+-- Hämta Carls art via from where
+SELECT	D.namn, A.namn AS Art
+FROM Djur D, Ras R, Art A
+WHERE (D.djurID = 77 AND D.rasID = R.rasID AND R.artID = A.artID)
+
+
 -- Hämta carls info via where/from
 SELECT  D.namn as Namn, A.namn as Art
 FROM Djur D, Ras R, Art A
@@ -325,19 +331,19 @@ WHERE (D.kundID = K.kundID)
 GROUP BY K.fnamn
 
 -- Räkna antal arter Louise har med inner join
-SELECT K.fnamn as Fornamn, count(distinct A.artID) as antalArter 
-from Kund K
-inner join Djur D on D.kundID = K.kundID
-INNER JOIN Ras R on R.rasID = D.rasID
-INNER JOIN Art A on A.artID = R.artID
+SELECT k.fnamn, k.enamn, COUNT(*) as Arter, A.namn
+FROM kund K
+INNER JOIN djur D ON K.kundID = D.kundID
+INNER JOIN ras R ON D.rasID = R.rasID
+INNER JOIN art A ON A.artID = R.artID
 WHERE K.kundID = 28
-GROUP BY K.fnamn
+GROUP BY K.fnamn, K.enamn, R.artID, A.namn
 
 -- Räkna antal arter Louse har med where/from
-SELECT K.fnamn as Fornamn, count(distinct A.artID) as TotaltAntalArter
+SELECT K.fnamn as Fornamn, count(*) as Arter, A.namn
 FROM Djur D, Kund K, Art A, Ras R
 WHERE (K.kundID = 28 AND D.kundID = K.kundID and D.rasID = R.rasID and A.artID = R.artID)
-GROUP BY K.fnamn
+GROUP BY K.fnamn, K.enamn, R.artID, A.namn
 
 -- UPPGIFT 4
 
