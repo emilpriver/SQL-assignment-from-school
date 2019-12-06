@@ -1,4 +1,4 @@
-# SQL Assgnment from School
+# SQL Assignment from School
 
 Got an task form school where the task was that i needed to write som SQL functions.
 
