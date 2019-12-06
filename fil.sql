@@ -292,13 +292,15 @@ INSERT INTO Art (namn, artID) VALUES ('Kanin', 4);
 SELECT D.djurID as DjurID, D.namn as Namn, R.namn as Ras, A.namn as Art
 FROM Djur D
 INNER JOIN  Ras R ON D.rasID = R.rasID
-INNER JOIN  Art A ON R.artID = A.artID;
+INNER JOIN  Art A ON R.artID = A.artID
+ORDER BY A.namn, R.namn, D.namn
 
 
 -- Hämta alla djur samt ras o art med from where
 SELECT D.djurID as DjurID, D.namn as Namn, R.namn as Ras, A.namn as Art
 FROM Djur D, Ras R, Art A
 WHERE (D.rasID = R.rasID AND R.artID = A.artID)
+ORDER BY A.namn, R.namn, D.namn
 
 -- Hämta Carls art via inner join
 SELECT	D.namn, A.namn as Art
