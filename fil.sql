@@ -7,6 +7,7 @@ CREATE TABLE Kund (
 	gatuadr varchar(255),
 	postnr char(5), -- Vi använder Varchar på postnummer för att arbeta med flexibilitet o motarbeta fel ist för INT
 	ort varchar(100), 
+	rabatt int DEFAULT 0,
 	kundID int NOT NULL IDENTITY,
 	PRIMARY KEY(kundID)
 );
