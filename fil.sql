@@ -308,10 +308,8 @@ where D.djurID = 77
 
 -- Hämta Carls art via from where
 SELECT	D.namn, A.namn AS Art
-FROM Djur D
-INNER JOIN ras R ON R.rasID = D.rasID
-INNER JOIN Art A ON A.artID = R.artID
-WHERE D.djurID = 77
+FROM Djur D, Ras R, Art A
+WHERE (D.djurID = 77 AND D.rasID = R.rasID AND R.artID = A.artID)
 
 
 -- Hämta carls info via where/from
