@@ -3,9 +3,9 @@
 CREATE TABLE Kund (
     fnamn varchar(100), -- Vi använder en max längd på 100 för de finns människor som kan ha väldigt långt namn ;)
 	enamn varchar(100),
-	persnr varchar(13), -- vi använder varchar för att ha mer flexibialitet eftersom att personumret kan innehålla ett -. max siffror utan - i ett personummer är 12 o 13 med -
+	persnr char(11), -- vi använder varchar för att ha mer flexibialitet eftersom att personumret kan innehålla ett -. max siffror utan - i ett personummer är 12 o 13 med -
 	gatuadr varchar(255),
-	postnr varchar(100), -- Vi använder Varchar på postnummer för att arbeta med flexibilitet o motarbeta fel ist för INT
+	postnr char(5), -- Vi använder Varchar på postnummer för att arbeta med flexibilitet o motarbeta fel ist för INT
 	ort varchar(100), 
 	kundID int NOT NULL IDENTITY,
 	PRIMARY KEY(kundID)
@@ -333,7 +333,7 @@ GROUP BY K.fnamn
 
 -- Räkna antal arter Louise har med inner join
 SELECT K.fnamn as Fornamn, count(distinct A.artID) as antalArter 
-from Kund K 
+from Kund K
 inner join Djur D on D.kundID = K.kundID
 INNER JOIN Ras R on R.rasID = D.rasID
 INNER JOIN Art A on A.artID = R.artID
@@ -375,4 +375,3 @@ INNER JOIN Djur D ON D.djurID = 152
 INNER JOIN ras R ON R.rasID = D.rasID
 INNER JOIN Art A ON A.artID = R.artID
 WHERE K.kundID = 32
-
