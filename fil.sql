@@ -306,12 +306,6 @@ inner join ras R on R.rasID = D.rasID
 inner join Art A on A.artID = R.artID
 where D.djurID = 77
 
--- Hämta Carls art via from where
-SELECT	D.namn, A.namn AS Art
-FROM Djur D, Ras R, Art A
-WHERE (D.djurID = 77 AND D.rasID = R.rasID AND R.artID = A.artID)
-
-
 -- Hämta carls info via where/from
 SELECT  D.namn as Namn, A.namn as Art
 FROM Djur D, Ras R, Art A
